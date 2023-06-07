@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head><!-- For experiments with the socket -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <script type="text/javascript">
+            var socket = io.connect('http://localhost:5000');  // Connect to your Flask server
+
+            socket.on('connect', function() {
+                socket.emit('get_stats', {  // Emit your event
+                    userId: '1',
+                    // resourceId: '1',
+                    startTime: '2023-06-01',
+                    endTime: '2023-06-03',
+                    timeFormat: 'hourly_cumulative'
+                });
+            });
+
+            socket.on('stats', function(data) {  // Listen for your server event
+                console.log(data);
+            });
+        </script>
+    </head>
+    <body></body>
+</html>
