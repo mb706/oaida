@@ -36,7 +36,8 @@ npm start
 
 create the `frontend/.env` file with the line
 ```sh
-REACT_APP_API_URL=<backend url> npm run build
+REACT_APP_API_URL=https://<backend url> npm run build
+PUBLIC_URL=https://<backend url>
 ```
 
 ## Status

@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS usage;
 
 CREATE TABLE user (
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
-    truename TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    truename TEXT NOT NULL,
     openaiId TEXT NOT NULL UNIQUE
 );
 
