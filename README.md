@@ -32,6 +32,13 @@ cd frontend
 npm start
 ```
 
+## Deploy
+
+create the `frontend/.env` file with the line
+```sh
+REACT_APP_API_URL=<backend url> npm run build
+```
+
 ## Status
 
 Very fragile, likely very buggy. Things that are missing in particular:
