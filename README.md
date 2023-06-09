@@ -34,14 +34,15 @@ npm start
 
 ## Deploy
 
-create the `frontend/.env` file with the line
+create the `frontend/.env.production` file with the line
 ```sh
-REACT_APP_SOCKET_URL=https://<backend host> npm run build
-REACT_APP_SOCKET_PATH=/<backend path>/socket.io/ npm run build
+REACT_APP_SOCKET_URL=https://<backend host>
+REACT_APP_SOCKET_PATH=/<backend path>/socket.io/
 PUBLIC_URL=https://<backend url>
 ```
 the `REACT_APP_SOCKET_PATH` is only needed if it is not the default ("`/socket.io/`").
-In that case, you also need to run the `backend/app.py` with the `SOCKET_PATH` environment variable set to the same value.
+
+You can also set the `SOCKET_PATH` environment for your `backend/app.py` if you are not redirecting to `/socket.io/` in your reverse proxy setup.
 
 ## Status
 

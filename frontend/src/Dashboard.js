@@ -30,6 +30,7 @@ const Dashboard = () => {
       socketUrl = "http://localhost:5000";
       socketPath = "/socket.io/";
     }
+    console.log('socketUrl', socketUrl, 'socketPath', socketPath);
     const socketIo = io(socketUrl, { path: socketPath });
     setSocket(socketIo);
 

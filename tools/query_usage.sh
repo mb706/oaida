@@ -2,12 +2,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-if [ -z "${3:-}" ] || [ ! -r "$1" -o ! -w "$2" ] ; then
+if [ -z "${4:-}" ] || [ ! -r "$1" -o ! -w "$2" ] ; then
     if [ ! -z "${3:-}" ] ; then
         echo "Error: $1 is not readable or $2 is not writable" >&2
     fi
     echo "Query OpenAI for resource usage for given date. Date must be in UTC." >&2
-    echo "Usage: $0 <api key file> <database file> <date>" >&2
+    echo "Usage: $0 <api key file> <database file> <date> <org id>" >&2
     exit 1
 fi
 
@@ -34,7 +34,7 @@ sqlite3 "$2" "SELECT id, name, openaiId from user;" | while IFS='|' read id name
     #     note that the resource name is a "like" pattern, since I don't want to hardcode the model versions.
     #   Finally, we SELECT INTO and COMMIT.
     # The || true is there to ignore errors for individual users.
-    curl -sK  <(sed 's/.*/header = "Authorization: Bearer \0"/' "$1") \
+    curl -H "OpenAI-Organization: $4" -sK  <(sed 's/.*/header = "Authorization: Bearer \0"/' "$1") \
         "https://api.openai.com/v1/usage?date=${3}&user_public_id=${openaiId}" | \
         jq -r 'def timestampToString: (. | strflocaltime("%Y-%m-%dT%H:%M")); [
   (.data[] | [(.aggregation_timestamp | timestampToString), .snapshot_id, .n_context_tokens_total / 1000, .n_generated_tokens_total / 1000, "nlp"]),

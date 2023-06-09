@@ -4,3 +4,4 @@ env/
 /OPENAI_ORG
 /instance
 .env
+.env.*
