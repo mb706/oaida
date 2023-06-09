@@ -17,10 +17,11 @@ tools/get_users.sh OPENAI_API_KEY instance/your_database.db "$(cat OPENAI_ORG)"
 
 Then loop the following every few minutes (not more frequent than 5 minutes, as OpenAI bins their updates in 5 min slots I believe):
 ```sh
-tools/query_usage.sh OPENAI_API_KEY instance/your_database.db  $(date -u '%F')
+tools/query_usage.sh OPENAI_API_KEY instance/your_database.db  $(date -u '%F') "$(cat OPENAI_ORG)"
 ```
 
-To be extra thorough, also run with yesterday's date about 10 mins past midnight to be sure nothing was missed.
+To be extra thorough, also run with yesterday's date (`date -d yesterday -u '%F'`) about 10 mins past UTC midnight to be sure nothing was missed.
+One way to do this is to use crontab with `CRON_TZ=UTC` in the crontab file.
 
 For local debug deployment, the backend server with
 ```sh
