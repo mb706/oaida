@@ -1,11 +1,12 @@
 from flask import Flask, jsonify
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'  # replace with your SQLite database path
 db = SQLAlchemy(app)
-socketio = SocketIO(app, cors_allowed_origins="*")  # remove cors_allowed_origins if not needed
+socketio = SocketIO(app, cors_allowed_origins="*", path = os.environ.get('SOCKET_PATH', 'socket.io'))  # remove cors_allowed_origins if not needed
 
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, select, literal
 from sqlalchemy.orm import relationship

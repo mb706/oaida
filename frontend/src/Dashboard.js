@@ -24,11 +24,13 @@ const Dashboard = () => {
   const [socket, setSocket] = useState(null); // Add a state for socket
 
   useEffect(() => {
-    let socketUrl = process.env.REACT_APP_API_URL;
+    let socketUrl = process.env.REACT_APP_SOCKET_URL;
+    let socketPath = process.env.REACT_APP_SOCKET_PATH;
     if (!socketUrl) {
       socketUrl = "http://localhost:5000";
+      socketPath = "/socket.io/";
     }
-    const socketIo = io(socketUrl);
+    const socketIo = io(socketUrl, { path: socketPath });
     setSocket(socketIo);
 
     return () => {
