@@ -5,29 +5,31 @@ OpenAI Dashboard Toy Project
 
 ## How to use:
 
-Needs OPENAI_ORG and OPENAI_API_KEY files.
+To use this project, you will need to have `OPENAI_ORG` and `OPENAI_API_KEY` files.
 
-Initialize the DB as follows:
+To initialize the database, run the following command:
 ```sh
-# create db file
 tools/init_db.sh instance/your_database.db
-# get users; run this again when users are added to the organization.
+```
+
+To get users, run the following command (make sure to run this again when new users are added to the organization):
+```sh
 tools/get_users.sh OPENAI_API_KEY instance/your_database.db "$(cat OPENAI_ORG)"
 ```
 
-Then loop the following every few minutes (not more frequent than 5 minutes, as OpenAI bins their updates in 5 min slots I believe):
+Loop the following command every few minutes (not more frequently than every 5 minutes, as OpenAI updates their bins in 5 minute slots):
 ```sh
-tools/query_usage.sh OPENAI_API_KEY instance/your_database.db  $(date -u '%F') "$(cat OPENAI_ORG)"
+tools/query_usage.sh OPENAI_API_KEY instance/your_database.db $(date -u '%F') "$(cat OPENAI_ORG)"
 ```
 
-To be extra thorough, also run with yesterday's date (`date -d yesterday -u '%F'`) about 10 mins past UTC midnight to be sure nothing was missed.
+To be extra thorough, also run the above command with yesterday's date (`date -d yesterday -u +'%F'`) about 10 minutes past UTC midnight to ensure that nothing was missed.
 One way to do this is to use crontab with `CRON_TZ=UTC` in the crontab file.
 
-For local debug deployment, the backend server with
+For local debug deployment, start the backend server with:
 ```sh
 python backend/app.py
 ```
-and the frontend with
+and start the frontend with:
 ```sh
 cd frontend
 npm start
@@ -41,17 +43,17 @@ REACT_APP_SOCKET_URL=https://<backend host>
 REACT_APP_SOCKET_PATH=/<backend path>/socket.io/
 PUBLIC_URL=https://<backend url>
 ```
-the `REACT_APP_SOCKET_PATH` is only needed if it is not the default ("`/socket.io/`").
+The `REACT_APP_SOCKET_PATH` is only needed if it is not the default ("`/socket.io/`").
 
 You can also set the `SOCKET_PATH` environment for your `backend/app.py` if you are not redirecting to `/socket.io/` in your reverse proxy setup.
 
 ## Status
 
-Very fragile, likely very buggy. Things that are missing in particular:
-* fine tuning costs
-* frontend update pushes when DB file is updated
-* frontend update does not play well with the "cumulative" switch I believe.
+This project is currently very fragile and likely very buggy. Some things that are missing include:
+* Fine tuning costs
+* Frontend update pushes when DB file is updated
+* Frontend update does not play well with the "cumulative" switch, I believe.
 
 ## License
 
-MIT
+This project is licensed under the MIT license.
