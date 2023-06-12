@@ -51,7 +51,7 @@ sqlite3 "$2" "SELECT id, name, openaiId from user;" | while IFS='|' read id name
     <(echo "
     BEGIN TRANSACTION;
 
-      DELETE FROM usage WHERE time >= '$startDate' AND time < '$endDate';
+      DELETE FROM usage WHERE userId = ${id} AND time >= '$startDate' AND time < '$endDate';
 
       WITH usageNew (userId, time, resourceName, units) AS (VALUES") \
     - \
