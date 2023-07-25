@@ -61,6 +61,7 @@ sqlite3 "$2" "SELECT id, name, openaiId from user;" | while IFS='|' read id name
         INNER JOIN resource ON resourceName like resource.name;
     COMMIT;
     ") | sqlite3 "$2" || true
-
+  echo "rate limit break..."
+  sleep 15
 done
 
